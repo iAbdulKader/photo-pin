@@ -1,0 +1,150 @@
+.overlay{
+  background-color: rgba(0,0,0,.5);
+  position:fixed;
+  top:0px;
+  left:0px;
+  width:100vw;
+  height:100vh;
+  z-index: 99999;
+}
+.center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal__container{
+  background-color: #fff;
+  overflow-y: auto;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(1);
+  max-height:95%;
+  width: 95%;
+  max-width: 450px;
+  border-radius: 8px;
+  box-shadow: 0px 20px 20px 0px #00000017;
+}
+.section1{
+  height: 40px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.section1 .close__btn{
+  margin-right: 5%;
+  margin-top: 3%;
+  width: 35px;
+  height: 80%;
+  background: rgba(0,0,0,.2);
+  border-radius: 10px;
+}
+.section1 .close__btn:hover{
+  background: rgba(0,0,0,.4);
+}
+.section2{
+  min-height: 400px;
+  width: 100%;
+}
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent; 
+}
+
+.modal__container #upload_label{
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+.modal__container #upload_label input{
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.img__box{
+  max-width: 70%;
+  height: 350px;
+  background-color: rgba(0,0,0,.1);
+  padding: 15px;
+  margin: 0;
+  border-radius: 12px;
+}
+.img__box .dotted__img__container{
+  width: 100%;
+  height: 100%;
+  border: 2px dashed #ff5757;
+  padding: 0;
+  border-radius: 8px;
+}
+  
+.upload__box__content{
+  text-align: center;
+}
+.upload__box__content h3{
+  font-size: 12px;
+  font-weight: 500;
+}
+.upload__box__content h4{
+  font-size: 10px;
+  font-weight: 500;
+}
+.pin__image__container {
+  overflow: hidden;
+  max-width: calc(70% + 30px);
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: rgba(0,0,0,.1);
+  border-radius: 12px;
+  position: relative;
+  transition: all 300ms ease-in-out;
+}
+.pin__image{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pin__image__container img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.section3 .input__form{
+  display: flex;
+  flex-direction: column;
+  margin: 20px 10%;
+}
+.input__form input{
+  width: 90%;
+  border: none;
+  outline: none;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #ff5757;
+}
+.save__btn__container{
+  display: flex;
+  justify-content: center;
+  margin: 5px 0 30px 0;
+}
+.save__btn__container select{
+  width: 110px;
+  height: 35px;
+  outline: none;
+  border: none;
+  padding: 5px 0;
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+}
+.save__btn__container .save__btn{
+  background: #ff5757;
+  width: 80px;
+  height: 35px;
+  color: #fff;
+  text-align: center;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+}
