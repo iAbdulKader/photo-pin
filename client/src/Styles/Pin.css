@@ -6,7 +6,7 @@
   height: 100%;
 }
 .my-masonry-grid_column {
-  padding: 10px;
+  padding: 10px 5px;
   background-clip: padding-box;
 }
 

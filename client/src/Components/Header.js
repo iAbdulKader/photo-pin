@@ -1,7 +1,5 @@
 import "../Styles/Header.css"
 
-import PinUpload from "./PinUpload";
-
 export default function Header({showModal, modalToggle}){
   return(
     <>

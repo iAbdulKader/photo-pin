@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import Compressor from 'compressorjs';
+
+import { GlobalContext } from "../Contexts/GlobalState"
 
 import "../Styles/PinUpload.css"
 
 export default function PinUpload({modalToggle}) {
+  const { addPin } = useContext(GlobalContext);
+  
   let [file, setFile] = useState(null);
   let [fileBlob, setFileBlob] = useState(null);
   let [title, setTitle] = useState("");
   let [description, setDescription] = useState("");
   let [destination, setDestination] = useState("");
   let [size, setSize] = useState("lg");
-  
+
   const upload = async (e) => {
     if (e.target.files && e.target.files[0]) {
         if (/image\/*/.test(e.target.files[0].type)) {
@@ -43,11 +47,15 @@ export default function PinUpload({modalToggle}) {
      data.append("description", description)
      data.append("destination", destination)
      data.append("size", size)
-      
+     
+     //let res = await axios.post("http://192.168.43.181:5000/upload", data);
      let res = await axios.post("http://localhost:5000/upload", data)
-      setFile(res.data.url)
+      addPin({
+       ...res.data,
+       url: fileBlob
+      })
       modalToggle();
-     alert((Date.now() - clickedDate)/1000)
+     //alert((Date.now() - clickedDate)/1000)
   }
   
   return(

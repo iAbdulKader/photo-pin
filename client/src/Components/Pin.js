@@ -1,8 +1,8 @@
-export default function Pin({url}){
+export default function Pin({pin}){
   return(
     <div className="wrapper">
       <div className="pin__box center">
-        <img src={url} alt="pin" />
+        <img src={pin.url} alt="pin" />
       </div>
     </div>
     )

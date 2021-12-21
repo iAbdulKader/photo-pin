@@ -1,19 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Pin from "./Pin";
 import axios from "axios";
 import "../Styles/Pin.css";
 import Masonry from 'react-masonry-css';
 
+import { GlobalContext } from "../Contexts/GlobalState"
+
 
 
 export default function PinBoard({result}){
-  let [pins, setPins] = useState([])
-  let [count, setCount] = useState(1)
- 
-  useEffect(async () => {
-    let result = await axios.post("http://localhost:5000/getpins");
-    setPins(result.data)
-    console.log(pins)
+ const { setPins, pins } = useContext(GlobalContext)
+
+  useEffect(() => {
+    const getData = async () => {
+      let result = await axios.post("http://192.168.43.181:5000/getpins");
+      //let result = await axios.post("http://localhost:5000/getpins")
+      await setPins(result.data)
+    }
+    getData();
+    
   }, [])
   
   const breakpointColumnsObj = {
@@ -32,7 +37,7 @@ export default function PinBoard({result}){
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column">
           { pins.map(pin=>
-           <Pin key={pin._id} url={pin.url} />
+           <Pin key={pin._id} pin={pin} />
           )}
       </Masonry>
     )

@@ -15,6 +15,11 @@ app.use(expressFileupload({
 // Routes 
 app.use("/upload", require("./Routes/Upload"));
 app.use("/getpins", require("./Routes/GetPins"));
+app.get("/", (req, res) => {
+  res.json({
+    server: "running"
+  })
+})
 
 // DB connection
 const connectDB = require("./Configs/db");

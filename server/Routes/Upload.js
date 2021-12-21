@@ -3,7 +3,8 @@ const cloudinary = require("cloudinary").v2;
 const Pin = require("../Model/Pin");
 
 router.post("", async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
+
   try {
     const file = req.files.pin;
     cloudinary.config({ 
@@ -13,6 +14,7 @@ router.post("", async (req, res) => {
       //secure: true
     });
     cloudinary.uploader.upload(file.tempFilePath, async (err, result) => {
+      console.log(err)
       const pin = new Pin({
         author: "ak",
         url: result.url,
@@ -22,7 +24,7 @@ router.post("", async (req, res) => {
         size: req.body.size || "lg"
       });
       let response = await pin.save()
-      console.log(response)
+      console.log(result)
       res.json(response)
     })
   } catch (e) {
