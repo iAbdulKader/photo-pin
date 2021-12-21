@@ -13,8 +13,9 @@ export default function PinBoard({result}){
 
   useEffect(() => {
     const getData = async () => {
-      let result = await axios.post("http://192.168.43.181:5000/getpins");
-      //let result = await axios.post("http://localhost:5000/getpins")
+      //let result = await axios.post("http://192.168.43.181:5000/getpins");
+      //let result = await axios.post("https://photopin-serverv1.herokuapp.com/getpins");
+      let result = await axios.post("http://localhost:5000/getpins")
       await setPins(result.data)
     }
     getData();

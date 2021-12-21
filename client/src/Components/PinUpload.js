@@ -6,7 +6,7 @@ import { GlobalContext } from "../Contexts/GlobalState"
 
 import "../Styles/PinUpload.css"
 
-export default function PinUpload({modalToggle}) {
+export default function PinUpload({modalToggle, showModal}) {
   const { addPin } = useContext(GlobalContext);
   
   let [file, setFile] = useState(null);
@@ -15,6 +15,7 @@ export default function PinUpload({modalToggle}) {
   let [description, setDescription] = useState("");
   let [destination, setDestination] = useState("");
   let [size, setSize] = useState("lg");
+  let [loading, setLoading] = useState(false);
 
   const upload = async (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -39,31 +40,45 @@ export default function PinUpload({modalToggle}) {
     }
   }
   const submit = async (e) => {
-    let clickedDate = new Date();
      e.preventDefault();
-     const data = new FormData();
-     data.append("pin", file)
-     data.append("title", title)
-     data.append("description", description)
-     data.append("destination", destination)
-     data.append("size", size)
-     
-     //let res = await axios.post("http://192.168.43.181:5000/upload", data);
-     let res = await axios.post("http://localhost:5000/upload", data)
-      addPin({
-       ...res.data,
-       url: fileBlob
-      })
-      modalToggle();
-     //alert((Date.now() - clickedDate)/1000)
+     setLoading(true)
+     if(title.trim() == "" || description.trim() =="" || destination.trim() == "" || file == null) {
+       setLoading(false)
+       alert("All Fields Are Required.")
+       return;
+     } else {
+       let clickedDate = new Date();
+       const data = new FormData();
+       data.append("pin", file)
+       data.append("title", title)
+       data.append("description", description)
+       data.append("destination", destination)
+       data.append("size", size)
+       
+       //let res = await axios.post("http://192.168.43.181:5000/upload", data);
+       //let res = await axios.post("https://photopin-serverv1.herokuapp.com/upload", data)
+       try {
+         let res = await axios.post("http://localhost:5000/upload", data)
+         addPin({
+          ...res.data,
+          url: fileBlob
+         })
+         setLoading(false)
+         modalToggle();
+       } catch (e) {
+         setLoading(false)
+         alert("Failed, Try Again")
+       }
+     }
   }
   
   return(
-    <div className="overlay center">
-      <div className="modal__container">
+    <>
+    <div style={{ display: `${showModal? "block" : "none"}` }} className="overlay center"></div>
+      <div className="modal__container" style={{ transform: `translate(-50%,-50%) scale(${showModal ? 1 : 0})` }}>
         <div className="section1">
           <div onClick={modalToggle} className="close__btn center">
-            ❎ 
+            &times;
           </div>
         </div>
         
@@ -101,10 +116,18 @@ export default function PinUpload({modalToggle}) {
               <option value="md">Medium</option>
               <option value="lg">Large (Orginal)</option>
             </select>
-           <span onClick={submit} className="save__btn center"><p>Save</p></span>
+            <div className="upload_btn_container center">
+              {!loading ? (<span onClick={submit} className="save__btn center"><p>Save</p></span>)
+              : (<svg className="loader" width="20px" height="20px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                <circle cx="50" cy="50" fill="none" stroke="#fff" strokeWidth="10" r="35" strokeDasharray="164.93361431346415 56.97787143782138">
+                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+                </circle>
+                </svg>)
+              }
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
     )
 }

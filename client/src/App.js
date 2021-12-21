@@ -16,11 +16,8 @@ function App() {
   return (
     <GlobalProvider>
       <Header showModal={showModal} modalToggle={modalToggle} />
+      <PinUpload modalToggle={modalToggle} showModal={showModal} /> 
       <PinBoard />
-      {
-        showModal ?
-          <PinUpload modalToggle={modalToggle} /> : null
-      }
     </GlobalProvider>
   );
 }

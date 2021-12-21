@@ -14,7 +14,9 @@ router.post("", async (req, res) => {
       //secure: true
     });
     cloudinary.uploader.upload(file.tempFilePath, async (err, result) => {
-      console.log(err)
+      if(err) return res.status(503).json({
+        message: "Upload Failed"
+      });
       const pin = new Pin({
         author: "ak",
         url: result.url,
@@ -23,9 +25,15 @@ router.post("", async (req, res) => {
         destination: req.body.destination,
         size: req.body.size || "lg"
       });
-      let response = await pin.save()
-      console.log(result)
-      res.json(response)
+      try {
+        let response = await pin.save()
+        console.log(result)
+        res.json(response)
+      } catch (e) {
+        res.status(500).json({
+          message: e.message
+         })
+      }
     })
   } catch (e) {
     console.log(e)
