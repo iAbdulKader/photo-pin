@@ -56,9 +56,9 @@ export default function PinUpload({modalToggle, showModal}) {
        data.append("size", size)
        
        //let res = await axios.post("http://192.168.43.181:5000/upload", data);
-       //let res = await axios.post("https://photopin-serverv1.herokuapp.com/upload", data)
        try {
-         let res = await axios.post("http://localhost:5000/upload", data)
+         let res = await axios.post("https://photopin-serverv1.herokuapp.com/upload", data)
+        // let res = await axios.post("http://localhost:5000/upload", data)
          addPin({
           ...res.data,
           url: fileBlob
